@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Signup — MediSure</title>
+
+<style>
+body {
+  font-family: Arial;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg,#0f1f3d,#1e4a8a);
+}
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  width: 320px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>Sign Up</h2>
+
+<form id="signupForm" method="POST" action="signup.php">
+  <input name="username" type="text" placeholder="Username">
+  <input name="email" type="email" placeholder="Email">
+  <input name="password" type="password" placeholder="Password">
+  <input name="confirm" type="password" placeholder="Confirm Password">
+  <button type="submit">Sign Up</button>
+</form>
+
+</div>
+
+<script src="validation.js"></script>
+<script>
+const form = document.getElementById('signupForm');
+Validator.attachLiveValidation(form);
+
+form.addEventListener('submit', function(e) {
+  if (!Validator.validateSignup(form)) {
+    e.preventDefault();
+  }
+});
+</script>
+
+</body>
+</html>
