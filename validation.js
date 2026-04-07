@@ -1,11 +1,8 @@
-// =============================================
-//  MediSure — Form Validation Library
-//  validation.js
-// =============================================
+
 
 const Validator = {
 
-  // ── Helpers ──────────────────────────────────────────────
+ 
 
   showError(input, message) {
     const field = input.closest('.field') || input.parentElement;
@@ -46,7 +43,7 @@ const Validator = {
     return password.length >= 8;
   },
 
-  // ── Per-form validators ───────────────────────────────────
+ 
 
   validateLogin(form) {
     let valid = true;
@@ -176,7 +173,7 @@ const Validator = {
     return valid;
   },
 
-  // ── Real-time inline validation ───────────────────────────
+
 
   attachLiveValidation(form) {
     form.querySelectorAll('input, textarea').forEach(el => {
@@ -206,7 +203,7 @@ const Validator = {
     });
   },
 
-  // ── Success toast ─────────────────────────────────────────
+  
 
   showSuccess(message) {
     let toast = document.getElementById('ms-toast');
@@ -233,7 +230,7 @@ const Validator = {
   }
 };
 
-// ── Shared validation CSS injected once ──────────────────────
+
 (function injectValidationStyles() {
   if (document.getElementById('ms-validation-styles')) return;
   const s = document.createElement('style');
