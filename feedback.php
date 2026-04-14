@@ -1,3 +1,54 @@
+<?php
+include "config.php";
+
+$success = "";
+$error = "";
+
+// Optional: get logged-in user
+$user_id = null;
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $stmt = $conn->prepare("SELECT id FROM users WHERE username=?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($row = $res->fetch_assoc()) {
+        $user_id = $row['id'];
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $rating  = isset($_POST['rating']) ? intval($_POST['rating']) : 0;
+    $message = trim($_POST['feedback']);
+
+    if (empty($message)) {
+      $error = "Feedback cannot be empty!";
+    } else {
+      if ($user_id !== null) {
+        $stmt = $conn->prepare("INSERT INTO feedback (user_id, rating, message) VALUES (?, ?, ?)");
+        $stmt->bind_param("iis", $user_id, $rating, $message);
+      } else {
+        $stmt = $conn->prepare("INSERT INTO feedback (user_id, rating, message) VALUES (NULL, ?, ?)");
+        $stmt->bind_param("is", $rating, $message);
+      }
+
+      if ($stmt) {
+        if ($stmt->execute()) {
+          $success = "Thank you for your feedback!";
+        } else {
+          $error = "Something went wrong: " . $stmt->error;
+        }
+        $stmt->close();
+      } else {
+        $error = "Failed to prepare statement: " . $conn->error;
+      }
+    }
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -179,8 +230,14 @@ textarea::placeholder { color: #94a3b8; }
   <div class="brand">MediSure</div>
   <h2>Share Feedback</h2>
   <p class="subtitle">We'd love to hear your thoughts.</p>
+  <?php if (!empty($success)) : ?>
+    <div style="background:#ecfdf5;color:#065f46;padding:10px;border-radius:8px;margin:12px 0;border:1px solid #bbf7d0;"><?php echo htmlspecialchars($success); ?></div>
+  <?php endif; ?>
+  <?php if (!empty($error)) : ?>
+    <div style="background:#fff1f2;color:#9f1239;padding:10px;border-radius:8px;margin:12px 0;border:1px solid #fecaca;"><?php echo htmlspecialchars($error); ?></div>
+  <?php endif; ?>
 
-  <form id="feedbackForm" novalidate>
+  <form id="feedbackForm" method="POST" action="feedback.php" novalidate>
     <div class="field">
       <label class="text-label">Rate your experience</label>
       <div class="rating-row">
@@ -220,14 +277,10 @@ textarea::placeholder { color: #94a3b8; }
   Validator.attachLiveValidation(form);
 
   form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (Validator.validateFeedback(form)) {
-      Validator.showSuccess('Thank you for your feedback!');
-      form.reset();
-      counter.textContent = '0';
-      textarea.classList.remove('is-valid');
-    }
-  });
+  if (!Validator.validateFeedback(form)) {
+    e.preventDefault(); // only stop if invalid
+  }
+});
 </script>
 </body>
 </html>

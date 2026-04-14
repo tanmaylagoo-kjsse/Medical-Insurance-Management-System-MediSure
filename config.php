@@ -59,11 +59,15 @@ $conn->query("CREATE TABLE IF NOT EXISTS feedback (
 
 $conn->query("CREATE TABLE IF NOT EXISTS contact_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
     name VARCHAR(100),
     email VARCHAR(100),
     message TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)");
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB");
 
 $conn->query("INSERT IGNORE INTO providers (id, name, contact_email, phone) VALUES
 (1, 'Star Health', 'support@starhealth.com', '9876543210'),
@@ -89,10 +93,10 @@ $conn->query("INSERT IGNORE INTO feedback (id, user_id, rating, message) VALUES
 (3, 3, 5, 'Very reliable insurance service')
 ");
 
-$conn->query("INSERT IGNORE INTO contact_messages (id, name, email, message) VALUES
-(1, 'Malhar Kausadikar', 'malhar@gmail.com', 'I want more details about family plans'),
-(2, 'Anuj Vajha', 'anuj@gmail.com', 'How do I claim insurance?'),
-(3, 'Tanmay Lagoo', 'tanmay@gmail.com', 'Do you cover pre-existing diseases?')
+$conn->query("INSERT IGNORE INTO contact_messages (id, user_id, name, email, message) VALUES
+(1, 1, 'Malhar Kausadikar', 'malhar@gmail.com', 'I want more details about family plans'),
+(2, 2, 'Anuj Vajha', 'anuj@gmail.com', 'How do I claim insurance?'),
+(3, 3, 'Tanmay Lagoo', 'tanmay@gmail.com', 'Do you cover pre-existing diseases?')
 ");
 
 if (!isset($_SESSION['username']) && isset($_COOKIE['username'])) {

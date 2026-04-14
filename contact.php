@@ -1,3 +1,61 @@
+<?php
+include "config.php";
+
+$messageSent = "";
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  $name    = isset($_POST['name']) ? trim($_POST['name']) : '';
+  $email   = isset($_POST['email']) ? trim($_POST['email']) : '';
+  $message = isset($_POST['message']) ? trim($_POST['message']) : '';
+
+  if (empty($name) || empty($email) || empty($message)) {
+    $error = "All fields are required!";
+  } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  $error = "Please provide a valid email address.";
+
+  } else {
+
+    // ✅ Check if user is logged in
+    if (!isset($_SESSION['username'])) {
+        $error = "You must be logged in to send a message.";
+    } else {
+
+        // ✅ Get user_id from username
+        $username = $_SESSION['username'];
+        $stmt_user = $conn->prepare("SELECT id FROM users WHERE username=?");
+        $stmt_user->bind_param("s", $username);
+        $stmt_user->execute();
+        $result = $stmt_user->get_result();
+        $user = $result->fetch_assoc();
+
+        if (!$user) {
+            $error = "User not found.";
+        } else {
+
+            $user_id = $user['id'];
+
+            // ✅ Fixed insert
+            $stmt = $conn->prepare("INSERT INTO contact_messages (user_id, name, email, message) VALUES (?, ?, ?, ?)");
+
+            if ($stmt) {
+                $stmt->bind_param("isss", $user_id, $name, $email, $message);
+                if ($stmt->execute()) {
+                    $messageSent = "Message sent successfully!";
+                } else {
+                    $error = "Something went wrong: " . $stmt->error;
+                }
+                $stmt->close();
+            } else {
+                $error = "Failed to prepare statement: " . $conn->error;
+            }
+        }
+    }
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -175,10 +233,17 @@ input::placeholder, textarea::placeholder { color: #94a3b8; }
 <body>
 
 <div class="card">
-  <a href="home.html" class="back-home">← Back to Home</a>
+  <a href="home.php" class="back-home">← Back to Home</a>
   <div class="brand">MediSure</div>
   <h2>Contact Us</h2>
   <p class="subtitle">We're here to help. Reach out anytime.</p>
+
+  <?php if (!empty($messageSent)) : ?>
+    <div style="background:#ecfdf5;color:#065f46;padding:10px;border-radius:8px;margin:12px 0;border:1px solid #bbf7d0;"><?php echo htmlspecialchars($messageSent); ?></div>
+  <?php endif; ?>
+  <?php if (!empty($error)) : ?>
+    <div style="background:#fff1f2;color:#9f1239;padding:10px;border-radius:8px;margin:12px 0;border:1px solid #fecaca;"><?php echo htmlspecialchars($error); ?></div>
+  <?php endif; ?>
 
   <div class="contact-info">
     <div class="info-pill">
@@ -193,7 +258,7 @@ input::placeholder, textarea::placeholder { color: #94a3b8; }
 
   <div class="divider"></div>
 
-  <form id="contactForm" novalidate>
+  <form id="contactForm" method="POST" action="contact.php" novalidate>
     <div class="field">
       <label for="name">Full Name</label>
       <input id="name" name="name" type="text" placeholder="Your name">
@@ -219,11 +284,8 @@ input::placeholder, textarea::placeholder { color: #94a3b8; }
   Validator.attachLiveValidation(form);
 
   form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (Validator.validateContact(form)) {
-      Validator.showSuccess('Message sent successfully!');
-      form.reset();
-      form.querySelectorAll('input, textarea').forEach(el => el.classList.remove('is-valid'));
+    if (!Validator.validateContact(form)) {
+      e.preventDefault(); // stop submission only when client-side validation fails
     }
   });
 </script>
