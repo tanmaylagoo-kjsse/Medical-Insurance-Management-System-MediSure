@@ -226,7 +226,7 @@ textarea::placeholder { color: #94a3b8; }
 <body>
 
 <div class="card">
-  <a href="home.html" class="back-home">← Back to Home</a>
+  <a href="home.php" class="back-home">← Back to Home</a>
   <div class="brand">MediSure</div>
   <h2>Share Feedback</h2>
   <p class="subtitle">We'd love to hear your thoughts.</p>

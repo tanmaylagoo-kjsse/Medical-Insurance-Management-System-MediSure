@@ -1,4 +1,9 @@
 <?php
+// Start session for all pages that include this config
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $conn = new mysqli("localhost", "root", "");
 
 if ($conn->connect_error) {

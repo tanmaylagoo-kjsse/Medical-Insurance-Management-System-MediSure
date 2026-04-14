@@ -483,7 +483,7 @@ if (isset($_GET['plan_id'])) {
           <span class="price-label">💳 Annual Premium</span>
           <span class="price-value"><?php echo htmlspecialchars($selectedPlan['price']); ?></span>
         </div>
-        <form method="POST" action="buy.php">
+        <form method="POST" action="payment.php">
           <input type="hidden" name="plan_id" value="<?php echo (int)$selectedPlan['id']; ?>">
           <div class="confirm-actions">
             <button class="btn" type="submit">✅ Confirm Purchase</button>
