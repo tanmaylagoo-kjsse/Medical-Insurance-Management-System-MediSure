@@ -1,45 +1,252 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <title>Corporate Plans</title>
 <style>
-body{font-family:Inter;background:#b1bcff;margin:0;}
-header{padding:15px 40px;background:#2563eb;color:white;border-bottom:1px solid #e2e8f0;}
-.container{padding:40px;}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,auto);gap:20px;}
-.card{background:white;padding:20px;border-radius:12px;border:1px solid #e2e8f0;}
-button{margin-top:10px;width:100%;padding:10px;background:#2563eb;color:white;border:none;border-radius:8px;}
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+:root {
+  --blue-900: #0f1f5c;
+  --blue-700: #1a3bbf;
+  --blue-600: #2563eb;
+  --blue-500: #3b82f6;
+  --blue-100: #dbeafe;
+  --blue-50: #eff6ff;
+  --accent: #f59e0b;
+  --accent-light: #fef3c7;
+  --surface: #ffffff;
+  --surface-2: #f8faff;
+  --border: #e2e9ff;
+  --text-primary: #0f1f5c;
+  --text-secondary: #4b5d8a;
+  --text-muted: #8898c0;
+  --shadow-sm: 0 1px 3px rgba(15,31,92,0.06), 0 1px 2px rgba(15,31,92,0.04);
+  --shadow-md: 0 4px 16px rgba(15,31,92,0.10), 0 2px 6px rgba(15,31,92,0.06);
+  --shadow-lg: 0 12px 40px rgba(15,31,92,0.15), 0 4px 12px rgba(15,31,92,0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #eef2ff;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(37,99,235,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(245,158,11,0.08) 0%, transparent 50%);
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+header {
+  padding: 0 48px;
+  height: 68px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 rgba(37,99,235,0.06), var(--shadow-sm);
+}
+
+header::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue-600);
+  box-shadow: 0 0 0 3px var(--blue-100);
+  flex-shrink: 0;
+}
+
+header h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--blue-900);
+  letter-spacing: -0.01em;
+}
+
+.container {
+  padding: 40px 48px 64px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--surface);
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.22s cubic-bezier(.22,.68,0,1.2), box-shadow 0.22s ease, border-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-600), var(--blue-500));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--blue-100);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card h3 {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.card p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  line-height: 1.4;
+  flex: 1;
+  margin-top: 2px;
+}
+
+.card b {
+  display: inline-block;
+  font-family: 'Sora', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--blue-700);
+  letter-spacing: -0.02em;
+  margin-top: 8px;
+}
+
+button {
+  margin-top: 14px;
+  width: 100%;
+  padding: 11px 16px;
+  background: var(--blue-600);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+}
+
+button:hover {
+  background: var(--blue-700);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37,99,235,0.4);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  header, .container { padding-left: 24px; padding-right: 24px; }
+}
+
+@media (max-width: 580px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.card .desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 6px;
+  flex: 1;
+}
+.card p { flex: 0; }
+.payout-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
 </style>
 </head>
 <body>
-
 <header><h2>Corporate Insurance Plans</h2></header>
-
 <div class="container">
 <div class="grid">
 
-<div class="card"><h3>ICICI Corporate</h3><p>Employee group insurance</p><b>Custom Pricing</b><button onclick="location.href='buy.php'">Buy</button></div>
-<div class="card"><h3>Tata AIG</h3><p>Flexible corporate coverage</p><b>Custom Pricing</b><button onclick="location.href='buy.php'">Buy</button></div>
-<div class="card"><h3>Bajaj Allianz</h3><p>Business insurance solutions</p><b>Custom Pricing</b><button onclick="location.href='buy.php'">Buy</button></div>
+<div class="card"><h3>ICICI Corporate</h3><p>Employee group insurance</p><p class="desc">Tailored group policy covering all employees for hospitalization, accidents, and critical illness benefits.</p><span class="payout-label">Claim Amount</span><b>INR3,00,000 per employee</b><button onclick="location.href='buy.php'">Buy</button></div>
+<div class="card"><h3>Tata AIG</h3><p>Flexible corporate coverage</p><p class="desc">Customizable corporate cover with maternity, OPD, and mental wellness add-ons for your workforce.</p><span class="payout-label">Claim Amount</span><b>INR5,00,000 per employee</b><button onclick="location.href='buy.php'">Buy</button></div>
+<div class="card"><h3>Bajaj Allianz</h3><p>Business insurance solutions</p><p class="desc">End-to-end business protection including employee health, liability, and property damage coverage.</p><span class="payout-label">Claim Amount</span><b>INR3,00,000 per employee</b><button onclick="location.href='buy.php'">Buy</button></div>
 
-<div class="card"><h3>HDFC Ergo</h3><p>Corporate health & liability</p><b>Custom Pricing</b><button onclick="location.href='buy.php'">Buy</button></div>
-<div class="card"><h3>Niva Bupa</h3><p>Group mediclaim plans</p><b>Custom Pricing</b><button onclick="location.href='buy.php'">Buy</button></div>
-<div class="card"><h3>Star Health</h3><p>SME & enterprise coverage</p><b>Custom Pricing</b><button onclick="location.href='buy.php'">Buy</button></div>
+<div class="card"><h3>HDFC Ergo</h3><p>Corporate health &amp; liability</p><p class="desc">Comprehensive corporate health and liability policy with dedicated relationship manager and cashless claims.</p><span class="payout-label">Claim Amount</span><b>INR5,00,000 per employee</b><button onclick="location.href='buy.php'">Buy</button></div>
+<div class="card"><h3>Niva Bupa</h3><p>Group mediclaim plans</p><p class="desc">Group mediclaim plan covering in-patient hospitalization, day-care, and pre-existing conditions from day one.</p><span class="payout-label">Claim Amount</span><b>INR3,00,000 per employee</b><button onclick="location.href='buy.php'">Buy</button></div>
+<div class="card"><h3>Star Health</h3><p>SME &amp; enterprise coverage</p><p class="desc">Scalable health cover for SMEs and enterprises with flexible sum insured and family floater add-ons.</p><span class="payout-label">Claim Amount</span><b>INR4,00,000 per employee</b><button onclick="location.href='buy.php'">Buy</button></div>
 
-<div class="card"><h3>Reliance General</h3><p>Workforce protection plans</p><b>Custom Pricing</b><button onclick="location.href='buy.php'">Buy</button></div>
-<div class="card"><h3>New India Assurance</h3><p>Government-backed group plans</p><b>Custom Pricing</b><button onclick="location.href='buy.php'">Buy</button></div>
-<div class="card"><h3>Aditya Birla</h3><p>Flexi benefit corporate plans</p><b>Custom Pricing</b><button onclick="location.href='buy.php'">Buy</button></div>
+<div class="card"><h3>Reliance General</h3><p>Workforce protection plans</p><p class="desc">Workforce protection plan covering accidental death, disability, and medical expenses for all employees.</p><span class="payout-label">Claim Amount</span><b>INR5,00,000 per employee</b><button onclick="location.href='buy.php'">Buy</button></div>
+<div class="card"><h3>New India Assurance</h3><p>Government-backed group plans</p><p class="desc">Government-backed group mediclaim with transparent claim processing and pan-India hospital network.</p><span class="payout-label">Claim Amount</span><b>INR2,00,000 per employee</b><button onclick="location.href='buy.php'">Buy</button></div>
+<div class="card"><h3>Aditya Birla</h3><p>Flexi benefit corporate plans</p><p class="desc">Flexible benefit plan letting employees choose coverage modules — health, wellness, dental, and vision.</p><span class="payout-label">Claim Amount</span><b>INR4,00,000 per employee</b><button onclick="location.href='buy.php'">Buy</button></div>
 
-<div class="card"><h3>HDFC Ergo</h3><p>Corporate health & liability</p><b>Custom Pricing</b><button>Contact</button></div>
-<div class="card"><h3>Niva Bupa</h3><p>Group mediclaim plans</p><b>Custom Pricing</b><button>Contact</button></div>
-<div class="card"><h3>Star Health</h3><p>SME & enterprise coverage</p><b>Custom Pricing</b><button>Contact</button></div>
+<div class="card"><h3>HDFC Ergo</h3><p>Corporate health &amp; liability</p><p class="desc">Comprehensive corporate health and liability policy with dedicated relationship manager and cashless claims.</p><span class="payout-label">Claim Amount</span><b>INR5,00,000 per employee</b><button>Contact</button></div>
+<div class="card"><h3>Niva Bupa</h3><p>Group mediclaim plans</p><p class="desc">Group mediclaim plan covering in-patient hospitalization, day-care, and pre-existing conditions from day one.</p><span class="payout-label">Claim Amount</span><b>INR3,00,000 per employee</b><button>Contact</button></div>
+<div class="card"><h3>Star Health</h3><p>SME &amp; enterprise coverage</p><p class="desc">Scalable health cover for SMEs and enterprises with flexible sum insured and family floater add-ons.</p><span class="payout-label">Claim Amount</span><b>INR4,00,000 per employee</b><button>Contact</button></div>
 
-<div class="card"><h3>Reliance General</h3><p>Workforce protection plans</p><b>Custom Pricing</b><button>Contact</button></div>
-<div class="card"><h3>New India Assurance</h3><p>Government-backed group plans</p><b>Custom Pricing</b><button>Contact</button></div>
-<div class="card"><h3>Aditya Birla</h3><p>Flexi benefit corporate plans</p><b>Custom Pricing</b><button>Contact</button></div>
+<div class="card"><h3>Reliance General</h3><p>Workforce protection plans</p><p class="desc">Workforce protection plan covering accidental death, disability, and medical expenses for all employees.</p><span class="payout-label">Claim Amount</span><b>INR5,00,000 per employee</b><button>Contact</button></div>
+<div class="card"><h3>New India Assurance</h3><p>Government-backed group plans</p><p class="desc">Government-backed group mediclaim with transparent claim processing and pan-India hospital network.</p><span class="payout-label">Claim Amount</span><b>INR2,00,000 per employee</b><button>Contact</button></div>
+<div class="card"><h3>Aditya Birla</h3><p>Flexi benefit corporate plans</p><p class="desc">Flexible benefit plan letting employees choose coverage modules — health, wellness, dental, and vision.</p><span class="payout-label">Claim Amount</span><b>INR4,00,000 per employee</b><button>Contact</button></div>
 
 </div>
 </div>
-
 </body>
 </html>
