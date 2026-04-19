@@ -198,6 +198,55 @@ $conn->query("INSERT IGNORE INTO plans (name, provider_id, type, price, claim_am
 ");
 
 
+$conn->query("INSERT IGNORE INTO providers (name, contact_email, phone) VALUES
+('PetSure India', 'support@petsureindia.com', '9000100015'),
+('Future Generali', 'help@futuregenerali.in', '9000100016'),
+('Oriental Insurance', 'info@orientalinsurance.org.in', '9000100017'),
+('Religare Care', 'care@religarecare.com', '9000100009'),
+('Care Health', 'care@carehealth.com', '9000100003')
+");
+
+// ================= CORPORATE PLANS =================
+$conn->query("INSERT IGNORE INTO plans (name, provider_id, type, price, claim_amount, description) VALUES
+
+-- CORPORATE
+('Group Health Basic',        (SELECT id FROM providers WHERE name='ICICI Lombard'),    'Corporate', '200000', '300000',  'Tailored group policy covering all employees for hospitalization, accidents, and critical illness benefits.'),
+('Flexible Corporate Cover',  (SELECT id FROM providers WHERE name='Tata AIG'),         'Corporate', '250000', '500000',  'Customizable corporate cover with maternity, OPD, and mental wellness add-ons for your workforce.'),
+('Business Protection Plan',  (SELECT id FROM providers WHERE name='Bajaj Allianz'),    'Corporate', '180000', '300000',  'End-to-end business protection including employee health, liability, and property damage coverage.'),
+('Corporate Health Shield',   (SELECT id FROM providers WHERE name='HDFC ERGO'),        'Corporate', '300000', '500000',  'Comprehensive corporate health and liability policy with dedicated relationship manager and cashless claims.'),
+('Group Mediclaim Plan',      (SELECT id FROM providers WHERE name='Niva Bupa'),        'Corporate', '220000', '300000',  'Group mediclaim plan covering in-patient hospitalization, day-care, and pre-existing conditions from day one.'),
+('SME Enterprise Cover',      (SELECT id FROM providers WHERE name='Star Health'),      'Corporate', '260000', '400000',  'Scalable health cover for SMEs and enterprises with flexible sum insured and family floater add-ons.'),
+('Workforce Protection Plan', (SELECT id FROM providers WHERE name='Reliance General'), 'Corporate', '280000', '500000',  'Workforce protection plan covering accidental death, disability, and medical expenses for all employees.'),
+('Government Group Plan',     (SELECT id FROM providers WHERE name='New India Assurance'),'Corporate','150000','200000', 'Government-backed group mediclaim with transparent claim processing and pan-India hospital network.'),
+('Flexi Benefit Plan',        (SELECT id FROM providers WHERE name='Aditya Birla Health'),'Corporate','270000','400000', 'Flexible benefit plan letting employees choose coverage modules — health, wellness, dental, and vision.'),
+
+-- PET
+('Dogs & Cats Cover',         (SELECT id FROM providers WHERE name='PetSure India'),    'Pet', '8000',  '50000', 'Covers vet consultation, surgery, hospitalization, and medication for dogs and cats up to age 10.'),
+('Vet Bills & Treatments',    (SELECT id FROM providers WHERE name='Future Generali'),  'Pet', '10000', '75000', 'Reimburses vet bills for illness, injury, diagnostics, and prescribed medicines for your pet.'),
+('Pet Health Coverage',       (SELECT id FROM providers WHERE name='Bajaj Allianz'),    'Pet', '9000',  '60000', 'Comprehensive pet health plan covering accidental injuries, illness treatment, and third-party liability.'),
+('Accident & Illness Cover',  (SELECT id FROM providers WHERE name='Tata AIG'),         'Pet', '8000',  '50000', 'Covers accidental injuries and sudden illnesses with fast cashless claims at empanelled vet clinics.'),
+('Government Pet Plan',       (SELECT id FROM providers WHERE name='New India Assurance'),'Pet','5000', '40000', 'Affordable government-backed plan covering dogs, cats, and livestock against illness and accidents.'),
+('Surgery & Hospitalisation', (SELECT id FROM providers WHERE name='HDFC ERGO'),        'Pet', '12000', '80000', 'Covers surgical procedures, hospitalization, and post-operative care for insured pets.'),
+('Wellness & Vaccination',    (SELECT id FROM providers WHERE name='Reliance General'), 'Pet', '6000',  '40000', 'Wellness-focused plan covering routine check-ups, vaccinations, de-worming, and dental cleaning.'),
+('Livestock & Pet Cover',     (SELECT id FROM providers WHERE name='Oriental Insurance'),'Pet', '4000', '30000', 'Covers livestock and domestic pets against death due to accident, illness, or surgical complications.'),
+('Comprehensive Pet Care',    (SELECT id FROM providers WHERE name='Star Health'),      'Pet', '11000', '75000', 'All-in-one pet plan covering preventive care, hospitalization, surgeries, and end-of-life expenses.'),
+
+-- SENIOR
+('Special Senior Healthcare', (SELECT id FROM providers WHERE name='Star Health'),       'Senior', '90000',  '2500000', 'Designed for 60–75 age group covering pre-existing diseases, domiciliary care, and annual check-ups.'),
+('Low Waiting Period Plan',   (SELECT id FROM providers WHERE name='Religare Care'),     'Senior', '82000',  '2000000', 'Minimal waiting period for pre-existing conditions; covers hospitalization, OPD, and mental health.'),
+('Comprehensive Senior Cover',(SELECT id FROM providers WHERE name='ICICI Lombard'),     'Senior', '88000',  '2500000', 'Senior-focused plan with no pre-policy medical test up to 65, covering chronic illness and home care.'),
+('Senior First Plan',         (SELECT id FROM providers WHERE name='Niva Bupa'),         'Senior', '95000',  '3000000', 'Senior-first plan with guaranteed renewability, coverage for cataract, joint replacement, and dialysis.'),
+('Secure Senior Plan',        (SELECT id FROM providers WHERE name='HDFC ERGO'),         'Senior', '85000',  '2000000', 'Secure plan for senior citizens with dedicated claims desk, personal health manager, and 24/7 support.'),
+('Active Health Senior Plan', (SELECT id FROM providers WHERE name='Aditya Birla Health'),'Senior','78000',  '1500000', 'Rewards active seniors with premium discounts; covers hospitalization, OPD, and wellness programs.'),
+('Silver Health Plan',        (SELECT id FROM providers WHERE name='Bajaj Allianz'),     'Senior', '83000',  '2000000', 'Silver plan with comprehensive cover for age-related illnesses, home nursing, and physiotherapy.'),
+('Senior Care Plan',          (SELECT id FROM providers WHERE name='Care Health'),       'Senior', '76000',  '1500000', 'Senior care plan with monthly health monitoring, teleconsultation, and priority claim processing.'),
+('Government Senior Cover',   (SELECT id FROM providers WHERE name='New India Assurance'),'Senior','65000', '1000000', 'Affordable government-backed senior cover with transparent terms and wide hospital network.')
+");
+
+
+
+
+
 
 
 ?>

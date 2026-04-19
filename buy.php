@@ -51,7 +51,7 @@ function fmt_inr($num) {
     return '₹' . $rest . ',' . $last3;
 }
 
-// Plan type → emoji
+
 $typeEmoji = [
     'individual'    => '👤',
     'senior'        => '👴',
